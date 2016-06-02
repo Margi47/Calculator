@@ -8,50 +8,48 @@ namespace Calculator
 {
     public class Calc
     {
-        public int CalculateResult(string input)
+        public int CalculateResult(Token[] tokens)
         {
             int answer;   
             Stack<int> digits = new Stack<int>();
 
-            for (int i=0; i<input.Length; i++)
+            for (int i=0; i<tokens.Count(); i++)
             {
-                char next = input[i];
+                string next = tokens[i].Value;
+                int nextDigit = 0;
 
-                if (char.IsDigit(next))
+                if (int.TryParse(next, out nextDigit))
                 {
-                    digits.Push(int.Parse(next.ToString()));
+                    digits.Push(nextDigit);
                 }
-                else if (next != ' ')
+                else if (digits.Count() >= 2)
                 {
-                    if (digits.Count() >= 2)
-                    {
-                        int first = digits.Pop();
-                        int second = digits.Pop();
-                        int result = 0;
+                    int first = digits.Pop();
+                    int second = digits.Pop();
+                    int result = 0;
                         
-                        if (next == '+')
-                        {
-                            result = first + second;
-                        }
-                        else if (next == '-')
-                        {
-                            result = second - first;
-                        }
-                        else if (next == '*')
-                        {
-                            result = first * second;
-                        }
-                        else if (next == '/')
-                        {
-                            result = second / first;
-                        }
-                        digits.Push(result);
-                    }
-                    else
+                    if (next == "+")
                     {
-                        throw new Exception("Not enough operands");
+                        result = first + second;
                     }
+                    else if (next == "-")
+                    {
+                        result = second - first;
+                    }
+                    else if (next == "*")
+                    {
+                        result = first * second;
+                    }
+                    else if (next == "/")
+                    {
+                        result = second / first;
+                    }
+                    digits.Push(result);
                 }
+                else
+                {
+                    throw new Exception("Not enough operands");
+                }                
             }
             answer = digits.Pop();
             if(digits.Count != 0)

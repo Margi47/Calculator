@@ -9,41 +9,45 @@ namespace Calculator
     public class Tokenizer
     {
         private const char SPACE = ' ';
-        char[] stopSymbol = new char[] { SPACE, '+', '-', '*', '/', '(', ')' };
+        private char[] _stopSymbol = new char[] { SPACE, '+', '-', '*', '/', '(', ')' };
         
         public Token[] SplitString(string input)
         {
             List<Token> tokenList = new List<Token>();           
-            string nextToken = string.Empty;
-            int positionInString = 0;
+            int tStart = 0;
+            int tLength = 0;
 
             for (int i = 0; i < input.Length; i++)
             {
-                if (stopSymbol.Contains(input[i]) == false)
+                if (_stopSymbol.Contains(input[i]))
                 {
-                    if (input[i] != SPACE)
+                    if (tLength > 0)
                     {
-                        nextToken += input[i];
+                        tokenList.Add(new Token(input.Substring(tStart, tLength), tStart));
+                        tStart = i;
+                        tLength = 0;
                     }
-                }
-                else if (stopSymbol.Contains(input[i]))
-                {
-                    Token newToken = new Token(nextToken, positionInString);
-                    tokenList.Add(newToken);
-                    nextToken = string.Empty;
-                    Token newToken2 = new Token(input[i].ToString(), i);
-                    tokenList.Add(newToken2);
-                    positionInString = i + 1;
 
-                    while (input[positionInString] == SPACE)
+                    if (tLength == 0)
                     {
-                        positionInString++;
-                    }
+                        if (input[i] == SPACE)
+                        {
+                            tStart++;
+                        }
+                        else
+                        {
+                            tokenList.Add(new Token(input[i].ToString(), tStart));
+                            tStart++;
+                        }
+                    }                    
                 }
+                else
+                {
+                    tLength++;
+                }                                      
             }
-
             return tokenList.ToArray();
-        }
-    
-    }
+        }      
+    }    
 }
+

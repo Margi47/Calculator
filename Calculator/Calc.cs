@@ -12,6 +12,7 @@ namespace Calculator
         {
             int answer;   
             Stack<int> digits = new Stack<int>();
+
             for (int i=0; i<input.Length; i++)
             {
                 char next = input[i];

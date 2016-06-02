@@ -14,22 +14,22 @@ namespace ParserTests
         public void parse_should_return_correct_string()
         {
             Parser myParser = new Parser();
-            string input = "2+5-8*2+4/2";
+            Token[] myTokens = new Token[9];
+            myTokens[0] = new Token("11", 0);
+            myTokens[1] = new Token("+", 2);
+            myTokens[2] = new Token("2", 3);
+            myTokens[3] = new Token("*", 4);
+            myTokens[4] = new Token("(", 5);
+            myTokens[5] = new Token("3", 6);
+            myTokens[6] = new Token("+", 7);
+            myTokens[7] = new Token("12", 8);
+            myTokens[8] = new Token(")", 10);
 
-            //string result=myParser.ParseInput(input);
+            //string input = "11+2*(3+12)";
 
-            //Assert.True(result == "2 5 8 2 * 4 2 / + - +");
-        }
+            string result=myParser.Parse(myTokens);
 
-        [Fact]
-        public void parse_should_return_correct_string_with_parentheses()
-        {
-            Parser myParser = new Parser();
-            string input = "2+(5-8)*2+4/2";
-
-            //string result = myParser.ParseInput(input);
-
-           // Assert.True(result == "2 5 8 - 2 * 4 2 / + +");
+            Assert.True(result == "11 2 3 12 + * +");
         }
     }
 }

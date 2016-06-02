@@ -14,11 +14,11 @@ namespace ParserTests
         public void calc_should_return_correct_value()
         {
             Calc myCalc = new Calc();
-            string input = "2 5 3 - 2 * 4 2 / + +";
+            string input = "11 2 3 12 + * +";
 
             int result = myCalc.CalculateResult(input);
 
-            Assert.True(result == 8);
+            Assert.True(result == 41);
         }
     }
 }

@@ -13,17 +13,17 @@ namespace ParserTests
         [Fact]
         public void split_should_return_correct_tokens()
         {
-            Token[] tokens;
+            Tokenizer myTokenizer = new Tokenizer();
             string input = "11+2*(3+12)";
 
-            tokens = Token.SplitString(input);
+            Token[] tokens = myTokenizer.SplitString(input);
 
             Assert.True(tokens.Length == 9);
-           // Assert.True(tokens[0].Value == "11");
-           // Assert.True(tokens[1].Value == "+");
-           // Assert.True(tokens[1].Position == 2);
-
-
+            Assert.True(tokens[0].Value == "11");
+            Assert.True(tokens[1].Value == "+");
+            Assert.True(tokens[1].Position == 2);
+            Assert.True(tokens[8].Value == ")");
+            Assert.True(tokens[8].Position == 10);
         }
     }
 }

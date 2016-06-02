@@ -8,59 +8,56 @@ namespace Calculator
 {
     public class Parser
     {
-        private Stack<string> _operators = new Stack<string>();
-        private string _result = string.Empty;
+        private Stack<Token> _operators = new Stack<Token>();       
         private List<string> _op = new List<string> { "+", "-", "*", "/" };
 
-        public string Parse(Token[] tokenstoParse)
+        public Token[] Parse(Token[] tokens)
         {
-            if (tokenstoParse != null)
+            List<Token> _result=new List<Token>();
+            if (tokens != null)
             {
-                for (int i = 0; i < tokenstoParse.Length; i++)
+                for (int i = 0; i < tokens.Length; i++)
                 {
-                    string next = tokenstoParse[i].Value;
-                    int nextInt;
+                    string next = tokens[i].Value;
                     if (_op.Contains(next))
                     {
                         if ((_operators.Count == 0) ||
-                            (_operators.Peek().Equals("+")) ||
-                            (_operators.Peek().Equals("-") ||
-                            (_operators.Peek().Equals("("))))
+                            (_operators.Peek().Value.Equals("+")) ||
+                            (_operators.Peek().Value.Equals("-") ||
+                            (_operators.Peek().Value.Equals("("))))
                         {
-                            _operators.Push(next);
+                            _operators.Push(tokens[i]);
                         }
-                        else if ((_operators.Peek().Equals("*")) ||
-                            (_operators.Peek().Equals("/")))
+                        else if ((_operators.Peek().Value.Equals("*")) ||
+                            (_operators.Peek().Value.Equals("/")))
                         {
-                            _result += (" " + _operators.Pop());
-                            _operators.Push(next);
+                            _result.Add(_operators.Pop());
+                            _operators.Push(tokens[i]);
                         }
                     }
                     else if (next == "(")
                     {
-                        _operators.Push(next);
+                        _operators.Push(tokens[i]);
                     }
                     else if (next == ")")
                     {
-                        while (_operators.Peek().Equals("(") == false)
+                        while (_operators.Peek().Value.Equals("(") == false)
                         {
-                            _result += (" " + _operators.Pop());
+                            _result.Add(_operators.Pop());
                         }
-
                         _operators.Pop();                       
                     }
-                    else if (int.TryParse(next, out nextInt))
+                    else 
                     {
-                        _result += (" " + nextInt);
-                    }    
-                                    
+                        _result.Add(tokens[i]);
+                    }                                      
                 } 
                 while (_operators.Count() != 0)
                 { 
-                   _result += (" " + _operators.Pop());
+                   _result.Add(_operators.Pop());
                 }             
             }
-            return _result.TrimStart();
+            return _result.ToArray();
         }
 
         public void CheckValidity(Token[] tokenstoCheck)

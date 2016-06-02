@@ -27,9 +27,24 @@ namespace ParserTests
 
             //string input = "11+2*(3+12)";
 
-            string result=myParser.Parse(myTokens);
+            Token[] newTokens = myParser.Parse(myTokens);
 
-            Assert.True(result == "11 2 3 12 + * +");
+            Assert.True(newTokens.Count() == 7);
+            Assert.True(newTokens[0].Value == "11");
+            Assert.True(newTokens[0].Position == 0);
+            Assert.True(newTokens[1].Value == "2");
+            Assert.True(newTokens[1].Position == 3);
+            Assert.True(newTokens[2].Value == "3");
+            Assert.True(newTokens[2].Position == 6);
+            Assert.True(newTokens[3].Value == "12");
+            Assert.True(newTokens[3].Position == 8);
+            Assert.True(newTokens[4].Value == "+");
+            Assert.True(newTokens[4].Position == 7);
+            Assert.True(newTokens[5].Value == "*");
+            Assert.True(newTokens[5].Position == 4);
+            Assert.True(newTokens[6].Value == "+");
+            Assert.True(newTokens[6].Position == 2);
+
         }
     }
 }

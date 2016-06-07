@@ -26,6 +26,7 @@ namespace ParserTests
             int result = myCalc.CalculateResult(myTokens);
 
             Assert.True(result == 41);
+
         }
     }
 }

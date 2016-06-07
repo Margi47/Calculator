@@ -8,56 +8,98 @@ namespace Calculator
 {
     public class Parser
     {
-        private Stack<Token> _operators = new Stack<Token>();       
-        private List<string> _op = new List<string> { "+", "-", "*", "/" };
+        private Stack<TokenValue> _operators = new Stack<TokenValue>();       
 
-        public Token[] Parse(Token[] tokens)
+        public TokenValue[] CreateObjects(Token[] tokens)
         {
-            List<Token> _result=new List<Token>();
-            if (tokens != null)
+            List<TokenValue> myTokenValue = new List<TokenValue> ();
+            foreach(var tok in tokens)
             {
-                for (int i = 0; i < tokens.Length; i++)
+                TokenValue next=null;
+                int result=0;
+                if (int.TryParse(tok.Value, out result))
                 {
-                    string next = tokens[i].Value;
-                    if (_op.Contains(next))
-                    {
-                        if ((_operators.Count == 0) ||
-                            (_operators.Peek().Value.Equals("+")) ||
-                            (_operators.Peek().Value.Equals("-") ||
-                            (_operators.Peek().Value.Equals("("))))
-                        {
-                            _operators.Push(tokens[i]);
-                        }
-                        else if ((_operators.Peek().Value.Equals("*")) ||
-                            (_operators.Peek().Value.Equals("/")))
-                        {
-                            _result.Add(_operators.Pop());
-                            _operators.Push(tokens[i]);
-                        }
-                    }
-                    else if (next == "(")
-                    {
-                        _operators.Push(tokens[i]);
-                    }
-                    else if (next == ")")
-                    {
-                        while (_operators.Peek().Value.Equals("(") == false)
-                        {
-                            _result.Add(_operators.Pop());
-                        }
-                        _operators.Pop();                       
-                    }
-                    else 
-                    {
-                        _result.Add(tokens[i]);
-                    }                                      
-                } 
-                while (_operators.Count() != 0)
-                { 
-                   _result.Add(_operators.Pop());
-                }             
+                    next = new Digits(tok);                 
+                }
+
+                if (tok.Value == "+")
+                {
+                    next = new Sum(tok);
+                }
+
+                if (tok.Value == "-")
+                {
+                    next = new Subtraction(tok);
+                }
+
+                if (tok.Value == "*")
+                {
+                    next = new Multiply(tok);
+                }
+
+                if (tok.Value == "/")
+                {
+                    next = new Division(tok);
+                }
+
+                if (tok.Value == "(")
+                {
+                    next = new LeftBrace(tok);
+                }
+
+                if (tok.Value == ")")
+                {
+                    next = new RightBrace(tok);
+                }
+                myTokenValue.Add(next);
             }
-            return _result.ToArray();
+            return myTokenValue.ToArray();
+        }
+
+        public TokenValue[] Parse(Token[] tokens)
+        {
+            var newTokens=CreateObjects(tokens);
+
+            List<TokenValue> _result = new List<TokenValue>();
+            foreach (var tok in newTokens)
+            {
+                if (tok.GetType() == typeof(Digits))
+                {
+                    _result.Add(tok);
+                }
+                else if (tok.GetType() == typeof(LeftBrace))
+                {
+                    _operators.Push(tok);
+                }
+                else if (tok.GetType() == typeof(RightBrace))
+                {
+                    while (_operators.Peek().GetType() != typeof(LeftBrace))
+                    {
+                        _result.Add(_operators.Pop());
+                    }
+                    _operators.Pop();
+                }
+                else if ((_operators.Count == 0)
+                        || (_operators.Peek().GetType() == typeof(Sum))
+                        || (_operators.Peek().GetType() == typeof(Subtraction))
+                        || (_operators.Peek().GetType() == typeof(LeftBrace)))
+                {
+                    _operators.Push(tok);
+                }
+                else if ((_operators.Peek().GetType() == typeof(Multiply)) ||
+                    (_operators.Peek().GetType() == typeof(Division)))
+                {
+                    _result.Add(_operators.Pop());
+                    _operators.Push(tok);
+                }
+            }
+
+            while (_operators.Count() != 0)
+            {
+                _result.Add(_operators.Pop());
+            }
+
+            return _result.ToArray();          
         }
 
         public void CheckValidity(Token[] tokenstoCheck)

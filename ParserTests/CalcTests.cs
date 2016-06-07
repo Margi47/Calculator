@@ -13,17 +13,13 @@ namespace ParserTests
         [Fact]
         public void calc_should_return_correct_value()
         {
+            Tokenizer myTokenizer = new Tokenizer();
+            Token[] myTokens = myTokenizer.SplitString("11+2*(3+12)");
+            Parser myParser = new Parser();
+            TokenValue[] myTokenValues = myParser.Parse(myTokens);
             Calc myCalc = new Calc();
-            Token[] myTokens = new Token[7];
-            myTokens[0] = new Token("11", 0);
-            myTokens[1] = new Token("2", 3);
-            myTokens[2] = new Token("3", 6);
-            myTokens[3] = new Token("12", 8);
-            myTokens[4] = new Token("+", 7);
-            myTokens[5] = new Token("*", 4);
-            myTokens[6] = new Token("+", 2);
 
-            int result = myCalc.CalculateResult(myTokens);
+            int result = myCalc.CalculateResult(myTokenValues);
 
             Assert.True(result == 41);
 

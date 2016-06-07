@@ -8,14 +8,14 @@ namespace Calculator
 {
     public class Calc
     {
-        public int CalculateResult(Token[] tokens)
+        public int CalculateResult(TokenValue[] tokens)
         {
             int answer;   
             Stack<int> digits = new Stack<int>();
 
-            for (int i=0; i<tokens.Count(); i++)
+            for (int i=0; i<tokens.Length; i++)
             {
-                string next = tokens[i].Value;
+                string next = tokens[i].ParentToken.Value;
                 int nextDigit = 0;
 
                 if (int.TryParse(next, out nextDigit))

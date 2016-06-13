@@ -4,12 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Calculator
+namespace Calculator.Planting
 {
-    public class Digits:TokenValue
+    interface IExpression
     {
-        public Digits(Token token):base(token)
-        {
-        }
+        int Calculate();
+        bool Complete { get; }
     }
 }

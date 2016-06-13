@@ -44,6 +44,10 @@ namespace Calculator
                 else
                 {
                     tLength++;
+                    if (i == input.Length - 1)
+                    {
+                        tokenList.Add(new Token(input.Substring(tStart, tLength), tStart));
+                    }
                 }                                      
             }
             return tokenList.ToArray();

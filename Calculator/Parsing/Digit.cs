@@ -6,13 +6,12 @@ using System.Threading.Tasks;
 
 namespace Calculator
 {
-    public class TokenValue
+    public class Digit:TokenValue
     {
-        public Token ParentToken { get; private set; }
-
-        public TokenValue(Token token)
+        public int Value { get; private set; }
+        public Digit(Token token, int value):base(token)
         {
-            ParentToken = token;
+            Value = value;
         }
     }
 }

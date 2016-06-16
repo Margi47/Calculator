@@ -28,5 +28,10 @@ namespace Calculator.Planting
             return Value.Value;
         }
 
+        public override string ToString()
+        {
+            return Value.Value.ToString();
+        }
+
     }
 }

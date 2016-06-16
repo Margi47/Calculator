@@ -10,20 +10,48 @@ namespace ParserTests
 {
     public class TokenTests
     {
+
+        Tokenizer myTokenizer = new Tokenizer();
+        Token[] resultTokens;
+        Token[] correctTokens;
+
         [Fact]
         public void split_should_return_correct_tokens()
-        {
-            Tokenizer myTokenizer = new Tokenizer();
+        {           
             string input = "11+2*(3+12)";
+            correctTokens = new Token[]
+            {
+                new Token("11", 0),
+                new Token("+", 2),
+                new Token("2", 3),
+                new Token("*", 4),
+                new Token("(", 5),
+                new Token("3", 6),
+                new Token("+", 7),
+                new Token("12", 8),
+                new Token(")", 10),
+            };
 
-            Token[] tokens = myTokenizer.SplitString(input);
+            resultTokens = myTokenizer.SplitString(input);
 
-            Assert.True(tokens.Length == 9);
-            Assert.True(tokens[0].Value == "11");
-            Assert.True(tokens[1].Value == "+");
-            Assert.True(tokens[1].Position == 2);
-            Assert.True(tokens[8].Value == ")");
-            Assert.True(tokens[8].Position == 10);
+            Assert.Equal<Token>(resultTokens, correctTokens); 
         }
+
+        [Fact]
+        public void split_should_return_correct_tokens2()
+        {
+            string input = "+  8 df";
+            correctTokens = new Token[]
+            {
+                new Token("+", 0),
+                new Token("8", 3),
+                new Token("df", 5),
+            };
+
+            resultTokens = myTokenizer.SplitString(input);
+
+            Assert.Equal<Token>(resultTokens, correctTokens);
+        }
+
     }
 }

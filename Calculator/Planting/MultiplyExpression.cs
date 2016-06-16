@@ -19,5 +19,10 @@ namespace Calculator.Planting
         {
             return LeftOperand.Calculate() * RightOperand.Calculate();
         }
+
+        public override string ToString()
+        {
+            return ("[" + LeftOperand.ToString() + " * " + RightOperand.ToString() + "]");
+        }
     }
 }

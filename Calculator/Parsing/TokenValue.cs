@@ -15,5 +15,11 @@ namespace Calculator
         {
             ParentToken = token;
         }
+
+        public override bool Equals(object obj)
+        {
+            var value = obj as TokenValue;
+            return (ParentToken.Value.Equals(value.ParentToken.Value)&&(ParentToken.Position.Equals(value.ParentToken.Position)));
+        }
     }
 }

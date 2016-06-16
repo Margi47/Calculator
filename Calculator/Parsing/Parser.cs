@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Calculator.Parsing.Visitors;
 
-namespace Calculator.Parsing
+namespace Calculator
 {
     public class Parser
     {

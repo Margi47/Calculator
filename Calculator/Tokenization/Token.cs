@@ -16,5 +16,14 @@ namespace Calculator
             Value = value;
             Position = position;
         }
+
+        public override bool Equals(object obj)
+        {
+            Token tok = obj as Token;
+            if (tok == null)
+                return false;
+            else
+                return (Value.Equals(tok.Value) && (Position.Equals(tok.Position)));
+        }
     }
 }

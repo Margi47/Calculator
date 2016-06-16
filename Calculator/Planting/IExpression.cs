@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Calculator.Planting
+namespace Calculator
 {
-    interface IExpression
+    public interface IExpression
     {
         int Calculate();
         bool Complete { get; }

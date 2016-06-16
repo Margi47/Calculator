@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Calculator.Planting
+namespace Calculator
 {
-    class Sorter
+    public class Sorter
     {
         /*public IExpression PlantTree(IEnumerable<TokenValue> tokens)
         {

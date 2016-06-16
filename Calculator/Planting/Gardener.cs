@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Calculator.Planting
 {
-    class Gardener
+    public class Gardener
     {
         public IExpression PlantTree(TokenValue[] tokens)
         {

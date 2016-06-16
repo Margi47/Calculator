@@ -34,7 +34,7 @@ namespace Calculator
 
                     var gardener = new Gardener();
                     var tree = gardener.PlantTree(tokenValues);
-
+                    
                     var result = tree.Calculate();
 
                     Console.WriteLine("Result is " + result);

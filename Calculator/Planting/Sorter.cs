@@ -8,37 +8,6 @@ namespace Calculator
 {
     public class Sorter
     {
-        /*public IExpression PlantTree(IEnumerable<TokenValue> tokens)
-        {
-            return Plant(tokens.GetEnumerator());
-          
-        }
-
-        private IExpression Plant(IEnumerator<TokenValue> tokenValueEnumerator)
-        {
-            var tok = tokenValueEnumerator.Current;
-
-            if (tok.GetType() == typeof(Digit))
-            {
-                var digit = new DigitExpression((Digit)tok);
-                if (tokenValueEnumerator.MoveNext())
-                {
-
-                }
-                else
-                {
-                    return digit;
-                }
-            }
-            else if (tok.GetType() == typeof(Sum))
-            {
-                var sum = new SumExpression((Sum)tok);
-                sum.LeftOperand = stack.Pop();
-
-            }
-        }*/
-
-
         public TokenValue[] SortToRPN(TokenValue[] tokens)
         {
             var _operators = new Stack<TokenValue>();        
@@ -48,7 +17,6 @@ namespace Calculator
             {
                 if (tok.GetType() == typeof(Digit))
                 {
-
                     _result.Add(tok);
                 }
                 else if (tok.GetType() == typeof(LeftBrace))

@@ -45,4 +45,4 @@ Console calculator implemented in 4 steps:
 ]
 ```
 4. Expression tree  
-![Expression tree](https://github.com/Margi47/Calculator/blob/master/ExampleTree.png)
+<img src="https://github.com/Margi47/Calculator/blob/master/ExampleTree.png" width="500">
